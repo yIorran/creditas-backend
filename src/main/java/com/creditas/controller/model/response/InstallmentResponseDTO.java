@@ -1,4 +1,4 @@
-package com.creditas.controller.model;
+package com.creditas.controller.model.response;
 
 import lombok.Builder;
 

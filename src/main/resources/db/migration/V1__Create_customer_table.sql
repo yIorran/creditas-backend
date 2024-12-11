@@ -1,6 +1,5 @@
 CREATE TABLE customer (
-    id CHAR(36) DEFAULT (UUID()) PRIMARY KEY,
+    id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     nome VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    birthDate DATE NOT NULL
-);
+    birthDate DATE NOT NUL

@@ -2,10 +2,11 @@ package com.creditas.entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @Entity
-public class CreditasTaxa {
+public class CreditasRate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,7 @@ public class CreditasTaxa {
     private Double rate;
 
     @Column(name = "createdAt")
-    private String createdAt;
+    private Date createdAt;
 
     @OneToMany(mappedBy = "rate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<LoanSimulation> simulacoesEmprestimo;

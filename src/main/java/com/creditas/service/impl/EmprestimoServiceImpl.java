@@ -1,6 +1,6 @@
 package com.creditas.service.impl;
 
-import com.creditas.controller.InstallmentResponseMapper;
+import com.creditas.usecase.model.mapper.LoanSimulationMapper;
 import com.creditas.entity.InstallmentPlan;
 import com.creditas.repository.RateRepository;
 import com.creditas.service.EmprestimoService;
@@ -18,18 +18,19 @@ public class EmprestimoServiceImpl implements EmprestimoService {
 
     private final RateRepository taxaRepository;
     private final Solver solver;
-    private final InstallmentResponseMapper installmentResponseMapper;
+    private final LoanSimulationMapper installmentResponseMapper;
 
 
-    public InstallmentPlan calculateLoanConditions(BigDecimal loanValue, Integer installs, String rate) {
+    public InstallmentPlan calculateLoanConditions(BigDecimal loanValue, Integer installs, BigDecimal rate) {
         return solver.calculateInstallmentPlan(
                 loanValue,
-                new BigDecimal(rate),
+                rate,
                 installs
         );
     }
 
-    public String getLoanRate(LocalDate birthDate) {
-        return taxaRepository.findBetween(Utils.calcularIdade(birthDate));
+    public BigDecimal getLoanRate(LocalDate birthDate) {
+        var rate = taxaRepository.findBetween(Utils.calcularIdade(birthDate));
+        return new BigDecimal(rate);
     }
 }

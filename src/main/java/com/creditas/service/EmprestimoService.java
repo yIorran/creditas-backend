@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Service
 public interface EmprestimoService {
 
-    InstallmentPlan calculateLoanConditions(BigDecimal loanValue, Integer installs, String rate);
+    InstallmentPlan calculateLoanConditions(BigDecimal loanValue, Integer installs, BigDecimal rate);
 
-    String getLoanRate(LocalDate birthDate);
+    BigDecimal getLoanRate(LocalDate birthDate);
 }

@@ -17,7 +17,7 @@ public class LoanSimulation {
 
     @ManyToOne
     @JoinColumn(name = "rate_id")
-    private CreditasTaxa rate;
+    private CreditasRate rate;
 
     @OneToMany(mappedBy = "simulacaoEmprestimo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<InstallmentPlan> installmentPlans;
