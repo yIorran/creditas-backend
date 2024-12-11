@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  title: Empréstimo Simulado API
+  description: API para simular empréstimos com base na idade e valores de entrada.
+  version: 1.0.0
+
+paths:
+  /simular-emprestimo:
+    post:
+      tags:
+        - Emprestimo
+      summary: Simula um empréstimo com base no valor, prazo e idade do cliente.
+      description: Realiza a simulação de um empréstimo, considerando o valor, prazo, taxa de juros e a faixa etária do cliente.
+      operationId: simularEmprestimo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulacaoEmprestimoRequest'
+      responses:
+        '200':
+          description: Simulação do empréstimo realizada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulacaoEmprestimoResponse'
+        '400':
+          description: Requisição inválida. O valor do empréstimo, o prazo e a data de nascimento são obrigatórios.
+        '500':
+          description: Erro interno no servidor.
+
+components:
+  schemas:
+    SimulacaoEmprestimoRequest:
+      type: object
+      required:
+        - valorEmprestimo
+        - dataNascimento
+        - prazoMeses
+      properties:
+        valorEmprestimo:
+          type: number
+          format: double
+          description: O valor do empréstimo solicitado.
+        dataNascimento:
+          type: string
+          format: date
+          description: Data de nascimento do cliente para calcular a faixa etária e a taxa de juros.
+        prazoMeses:
+          type: integer
+          description: O número de meses para o pagamento do empréstimo.
+
+    SimulacaoEmprestimoResponse:
+      type: object
+      properties:
+        valorTotal:
+          type: number
+          format: double
+          description: O valor total a ser pago pelo cliente, incluindo os juros.
+        valorParcelas:
+          type: number
+          format: double
+          description: O valor das parcelas mensais a ser pago pelo cliente.
+        totalJuros:
+          type: number
+          format: double
+          description: O total de juros pagos durante o período do empréstimo.
+
+  parameters:
+    idade:
+      name: idade
+      in: query
+      required: true
+      description: A idade do cliente para determinar a taxa de juros.
+      schema:
+        type: integer
+        example: 30
+
+  responses:
+    InvalidRequest:
+      description: A requisição está malformada ou faltando campos obrigatórios.
+
+
