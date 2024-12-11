@@ -1,12 +1,15 @@
 package com.creditas.service;
 
-import com.creditas.controller.model.SimulacaoEmprestimoRequestDTO;
-import com.creditas.controller.model.SimulacaoEmprestimoResponseDTO;
+import com.creditas.entity.InstallmentPlan;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Service
 public interface EmprestimoService {
 
-    SimulacaoEmprestimoResponseDTO simularEmprestimo(SimulacaoEmprestimoRequestDTO simulacaoEmprestimoRequestDTO);
+    InstallmentPlan calculateLoanConditions(BigDecimal loanValue, Integer installs, String rate);
 
+    String getLoanRate(LocalDate birthDate);
 }

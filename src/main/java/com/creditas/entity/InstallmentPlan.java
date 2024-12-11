@@ -19,7 +19,7 @@ public class InstallmentPlan {
     private List<Installment> parcelas;
 
     @ManyToOne
-    @JoinColumn(name = "simulacao_id")  // Definindo corretamente o nome da chave estrangeira
+    @JoinColumn(name = "simulacao_id")
     private LoanSimulation simulacaoEmprestimo;
 }
 
