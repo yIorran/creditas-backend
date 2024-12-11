@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture;
 public class LoanSimulationUsecase {
 
     private final EmprestimoService emprestimoService;
-    private final LoanSimulationMapper installmentResponseMapper;
+    private final LoanSimulationMapper loanSimulationMapper;
 
     @Async
     public CompletableFuture<InstallmentPlanResponseDTO> simulateLoan(LoanSimulationUseCaseDTO requestDTO) {
@@ -34,7 +34,7 @@ public class LoanSimulationUsecase {
                 )
         );
 
-        return installmentPlanFuture.thenApplyAsync(installmentResponseMapper::convertToResponse);
+        return installmentPlanFuture.thenApplyAsync(loanSimulationMapper::convertToResponse);
     }
 
     public InstallmentPlanResponseDTO saveClientCredentials(LoanSimulationRequestDTO requestDTO) {

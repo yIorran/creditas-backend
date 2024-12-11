@@ -4,7 +4,7 @@ import com.creditas.usecase.model.mapper.LoanSimulationMapper;
 import com.creditas.entity.InstallmentPlan;
 import com.creditas.repository.RateRepository;
 import com.creditas.service.EmprestimoService;
-import com.creditas.service.Solver;
+import com.creditas.service.CalculationService;
 import com.creditas.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.time.LocalDate;
 public class EmprestimoServiceImpl implements EmprestimoService {
 
     private final RateRepository taxaRepository;
-    private final Solver solver;
+    private final CalculationService solver;
     private final LoanSimulationMapper installmentResponseMapper;
 
 

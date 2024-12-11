@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 public class EmprestimoController {
 
     private LoanSimulationUsecase emprestimoService;
-    private LoanRequestMapper mapper;
+    private final LoanRequestMapper mapper;
 
     @GetMapping
     public ResponseEntity<InstallmentPlanResponseDTO> simularEmprestimo(@RequestBody LoanSimulationRequestDTO request) throws ExecutionException, InterruptedException {
