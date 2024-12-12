@@ -1,50 +1,35 @@
 package com.creditas.service.impl;
 
-import com.creditas.entity.Installment;
-import com.creditas.entity.InstallmentPlan;
+import com.creditas.entity.LoanSimulation;
 import com.creditas.service.CalculationService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class SolverImpl implements CalculationService {
 
     @Override
-    public InstallmentPlan calculateInstallmentPlan(BigDecimal loanValue, BigDecimal anualRate, Integer installs) {
-        BigDecimal anualRateDecimal = anualRate.divide(new BigDecimal("100"), 10, RoundingMode.HALF_UP);
+    public LoanSimulation calculateInstallmentPlan(BigDecimal loanValue, BigDecimal anualRate, Integer installs) {
+        var anualRateDecimal = anualRate.divide(new BigDecimal("100"), 10, RoundingMode.HALF_UP); // ajustar taxa para porcentagem
 
-        BigDecimal monthRate = anualRateDecimal.divide(new BigDecimal("12"), 10, RoundingMode.HALF_UP);
+        var monthRate = anualRateDecimal.divide(new BigDecimal("12"), 10, RoundingMode.HALF_UP); // taxa de juros mensal
 
-        BigDecimal onePlusRate = BigDecimal.ONE.add(monthRate);
-        BigDecimal powerTerm = onePlusRate.pow(installs);
-        BigDecimal denominator = powerTerm.subtract(BigDecimal.ONE);
-        BigDecimal pmt = loanValue.multiply(monthRate).divide(denominator, 2, RoundingMode.HALF_UP);
+        var onePlusRate = BigDecimal.ONE.add(monthRate);
+        var powerTerm = onePlusRate.pow(installs);
+        var denominator = powerTerm.subtract(BigDecimal.ONE);
+        var pmt = loanValue.multiply(monthRate).multiply(powerTerm).divide(denominator, 2, RoundingMode.HALF_UP);
 
-        InstallmentPlan plan = new InstallmentPlan();
+        var plan = new LoanSimulation();
 
-        plan.setParcelas(calculateInstallments(pmt, installs));
+        plan.setQuantidadeParcelas(installs.toString());
+        plan.setValorParcelas(pmt.setScale(2, RoundingMode.HALF_UP));
+        plan.setValorTotal(pmt.multiply(new BigDecimal(installs)).setScale(2, RoundingMode.HALF_UP));
+        plan.setRate(anualRate.doubleValue());
 
         return plan;
     }
-
-    private List<Installment> calculateInstallments(BigDecimal pmt, Integer installs) {
-        List<Installment> installments = new ArrayList<>();
-
-        for (int i = 0; i < installs; i++) {
-            Installment installment = new Installment();
-            installment.setParcela("Parcela " + (i + 1));
-            installment.setValor(pmt.setScale(2, RoundingMode.HALF_UP).toString());
-
-            installments.add(installment);
-        }
-
-        return installments;
-    }
-
 
 
 }

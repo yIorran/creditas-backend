@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface RateRepository extends JpaRepository<CreditasRate, Long> {
 
     @Query("SELECT c.rate FROM CreditasRate c WHERE :age BETWEEN c.minAge AND c.maxAge")
-    String findBetween(Integer age);
+    Double findBetween(Integer age);
 
 }

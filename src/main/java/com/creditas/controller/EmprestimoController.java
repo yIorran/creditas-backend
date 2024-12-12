@@ -26,7 +26,7 @@ public class EmprestimoController {
     public ResponseEntity<InstallmentPlanResponseDTO> simularEmprestimo(@RequestBody LoanSimulationRequestDTO request) throws ExecutionException, InterruptedException {
         var response = emprestimoService.simulateLoan(mapper.convertToUseCaseRequest(request));
 
-        return ResponseEntity.ok(response.get());
+        return ResponseEntity.ok(response);
     }
 
 }

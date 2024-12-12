@@ -1,10 +1,12 @@
 package com.creditas.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.sql.Date;
 import java.util.List;
 
+@Builder
 @Entity
 public class CreditasRate {
 

@@ -1,10 +1,15 @@
 package com.creditas.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.util.List;
+import java.math.BigDecimal;
 
+@Data
+@Builder
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class LoanSimulation {
 
     @Id
@@ -13,13 +18,19 @@ public class LoanSimulation {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @ToString.Exclude
     private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name = "rate_id")
-    private CreditasRate rate;
+    @Column(name = "taxa")
+    private Double rate;
 
-    @OneToMany(mappedBy = "simulacaoEmprestimo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<InstallmentPlan> installmentPlans;
+    @Column(name = "qntdParcelas")
+    private String quantidadeParcelas;
+
+    @Column(name = "valorParcelas")
+    private BigDecimal valorParcelas;
+
+    @Column(name = "valorTotal")
+    private BigDecimal valorTotal;
 }
 

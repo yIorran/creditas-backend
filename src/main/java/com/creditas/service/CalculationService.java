@@ -1,11 +1,11 @@
 package com.creditas.service;
 
-import com.creditas.entity.InstallmentPlan;
+import com.creditas.entity.LoanSimulation;
 
 import java.math.BigDecimal;
 
 public interface CalculationService {
 
-    InstallmentPlan calculateInstallmentPlan(BigDecimal loanValue, BigDecimal anualRate, Integer installs);
+    LoanSimulation calculateInstallmentPlan(BigDecimal loanValue, BigDecimal anualRate, Integer installs);
 
 }
