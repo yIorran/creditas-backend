@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Service
-public class SolverImpl implements CalculationService {
+public class CalculationServiceImpl implements CalculationService {
 
     @Override
     public LoanSimulation calculateInstallmentPlan(BigDecimal loanValue, BigDecimal anualRate, Integer installs) {
