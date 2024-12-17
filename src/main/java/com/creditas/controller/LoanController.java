@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/emprestimo")
 @AllArgsConstructor
-public class EmprestimoController {
+public class LoanController {
 
     private final LoanSimulationUsecase loanSimulationUsecase;
     private final LoanRequestMapper mapper;
