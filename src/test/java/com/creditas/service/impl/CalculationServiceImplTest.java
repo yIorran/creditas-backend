@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CalculationServiceImplTest {
 
@@ -24,4 +25,16 @@ public class CalculationServiceImplTest {
         assertEquals(new BigDecimal("10272.84"), result.getValorTotal());
         assertEquals(5.0, result.getRate());
     }
+
+    @Test
+    public void testCalculateInstallmentPlanZeroInstallments() {
+        BigDecimal loanValue = new BigDecimal("10000");
+        BigDecimal annualRate = new BigDecimal("5");
+        int installs = 0;
+
+        assertThrows(ArithmeticException.class, () -> {
+            calculationService.calculateInstallmentPlan(loanValue, annualRate, installs);
+        });
+    }
+
 }

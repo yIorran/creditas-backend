@@ -3,6 +3,7 @@ package com.creditas.usecase;
 import com.creditas.controller.model.response.InstallmentPlanResponseDTO;
 import com.creditas.entity.LoanSimulation;
 import com.creditas.exception.LoanCalculationException;
+import com.creditas.exception.SaveCustomerException;
 import com.creditas.service.EmailService;
 import com.creditas.service.EmprestimoService;
 import com.creditas.service.LoanSimulationService;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Slf4j
@@ -50,13 +53,19 @@ public class LoanSimulationUsecase {
 
     @Async
     private void saveLoanSimulation(LoanSimulationUseCaseDTO requestDTO, LoanSimulation loanSimulation) {
-        log.info("Saving loan simulation for customer: {}", requestDTO.customerName());
-        loanSimulationService.saveLoanSimulation(
-                requestDTO.birthDate().toString(),
-                requestDTO.customerName(),
-                requestDTO.customerEmail(),
-                loanSimulation
-        );
-        log.info("Loan simulation saved for customer: {}", requestDTO.customerName());
+        try {
+            Optional.ofNullable(requestDTO.customerEmail()).orElseThrow(() -> new SaveCustomerException("Customer email is required"));
+            Optional.ofNullable(requestDTO.customerName()).orElseThrow(() -> new SaveCustomerException("Customer name is required"));
+            log.info("Saving loan simulation for customer: {}", requestDTO.customerName());
+            loanSimulationService.saveLoanSimulation(
+                    requestDTO.birthDate().toString(),
+                    requestDTO.customerName(),
+                    requestDTO.customerEmail(),
+                    loanSimulation
+            );
+            log.info("Loan simulation saved for customer: {}", requestDTO.customerName());
+        } catch (Exception e) {
+            throw new SaveCustomerException(e.getMessage());
+        }
     }
 }

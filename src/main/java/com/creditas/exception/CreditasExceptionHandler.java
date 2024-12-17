@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class CreditasExceptionHandler {
 
-    @ExceptionHandler(value = {LoanCalculationException.class, RateRecoveryException.class})
+    @ExceptionHandler(value = {LoanCalculationException.class, RateRecoveryException.class, SaveCustomerException.class})
     public ResponseEntity<Problem> handleCustomExceptions(HttpServletRequest req, Exception e) throws Exception {
         HttpStatus status = Objects.requireNonNull(AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class)).value();
         Problem problem = Problem.builder()
